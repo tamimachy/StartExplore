@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using StartExplore.API.Models.DTO;
 using StartExploreAPI.Data;
 using StartExploreAPI.Models.Domain;
 
@@ -21,8 +22,24 @@ namespace StartExplore.API.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var regions = dbContext.Regions.ToList();
-            return Ok(regions);
+            // Get Data From Database - Domain models
+            var regionsDomain = dbContext.Regions.ToList();
+
+            // Map Domain Models to DTOs
+            var regionsDto = new List<RegionDto>();
+            foreach(var regionDomain in regionsDomain)
+            {
+                regionsDto.Add(new RegionDto()
+                {
+                    Id = regionDomain.Id,
+                    Code = regionDomain.Code,
+                    Name = regionDomain.Name,
+                    RegionImageUrl = regionDomain.RegionImageUrl
+                });
+            }
+
+            // Return DTOs
+            return Ok(regionsDto);
         }
 
         // GET SINGLE REGION (Get Region By ID)
@@ -32,8 +49,9 @@ namespace StartExplore.API.Controllers
         public IActionResult GetById([FromRoute] Guid id)
         {
             // var region = dbContext.Regions.Find(id);
-            var region = dbContext.Regions.FirstOrDefault(x => x.Id == id);
-            if(region == null)
+            // Get Region Domain Model From Database
+            var regionDomain = dbContext.Regions.FirstOrDefault(x => x.Id == id);
+            if(regionDomain == null)
             {
                 return NotFound();
             }
