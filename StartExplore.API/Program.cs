@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using StartExplore.API.Mappings;
+using StartExplore.API.Repositories;
 using StartExploreAPI.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(); ;
 
 builder.Services.AddDbContext<StartExploreDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("StartExploreDbContext")));
+
+builder.Services.AddScoped<IRegionRepository, SQLRegionReporsitory>();
+
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
 var app = builder.Build();
 
