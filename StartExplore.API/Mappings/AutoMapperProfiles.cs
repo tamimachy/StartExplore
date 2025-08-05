@@ -15,6 +15,7 @@ namespace StartExplore.API.Mappings
             CreateMap<UpdateWalkRequestDto, Walk>().ReverseMap();
             CreateMap<Walk, WalkDto>().ReverseMap();
             CreateMap<Difficulty, DifficultyDto>().ReverseMap();
+            
 
         }
     }
