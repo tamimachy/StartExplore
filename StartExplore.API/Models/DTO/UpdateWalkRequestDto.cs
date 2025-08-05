@@ -1,6 +1,6 @@
 ﻿namespace StartExplore.API.Models.DTO
 {
-    public class AddWalksRequestDto
+    public class UpdateWalkRequestDto
     {
         public string Name { get; set; }
         public string Description { get; set; }

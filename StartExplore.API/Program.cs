@@ -15,6 +15,7 @@ builder.Services.AddSwaggerGen(); ;
 builder.Services.AddDbContext<StartExploreDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("StartExploreDbContext")));
 
 builder.Services.AddScoped<IRegionRepository, SQLRegionReporsitory>();
+builder.Services.AddScoped<IWalkRepository, SQLWalkRepository>();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
