@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using StartExplore.API.CustomActionFilters;
 using StartExplore.API.Models.DTO;
 using StartExplore.API.Repositories;
 using StartExploreAPI.Models.Domain;
@@ -22,6 +23,7 @@ namespace StartExplore.API.Controllers
         // CREATE Walks
         // POST: /api/walks
         [HttpPost]
+        [ValidateModel]
         public async Task<IActionResult> Create([FromBody] AddWalkRequestDto addWalkRequestDto)
         {
             // Mapp DTO to Domain Model
@@ -65,6 +67,7 @@ namespace StartExplore.API.Controllers
         // PUT: /api/walks/{id}
         [HttpPut]
         [Route("{id:Guid}")]
+        [ValidateModel]
         public async Task<IActionResult> Update([FromRoute] Guid id, UpdateWalkRequestDto updateWalkRequestDto)
         {
             // Map DTO to Domain Model

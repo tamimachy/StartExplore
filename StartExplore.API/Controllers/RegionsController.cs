@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using StartExplore.API.CustomActionFilters;
 using StartExplore.API.Models.DTO;
 using StartExplore.API.Repositories;
 using StartExploreAPI.Data;
@@ -57,6 +58,7 @@ namespace StartExplore.API.Controllers
         // POST To Create New Region
         // POST: https://localhost:portnumber/api/regions
         [HttpPost]
+        [ValidateModel]
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto addRegionRequestDto)
         {
             // Map or Convert DTO to Domain Model
@@ -68,13 +70,14 @@ namespace StartExplore.API.Controllers
             // Map Domain model back to DTO
             var regionDto = mapper.Map<RegionDto>(regionDomainModel);
 
-            return CreatedAtAction(nameof(GetById), new {id = regionDto.Id}, regionDto);
+            return CreatedAtAction(nameof(GetById), new { id = regionDto.Id }, regionDto);
         }
 
         // Update Region
         // PUT: https://localhost:portnumber/api/regions/{id}
         [HttpPut]
         [Route("{id:Guid}")]
+        [ValidateModel]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto )
         {
             // Map DTO to Domain Model 
@@ -82,12 +85,12 @@ namespace StartExplore.API.Controllers
 
             // Check if region exists
             regionDomainModel = await regionRepository.UpdateAsync(id, regionDomainModel);
-            
-            if(regionDomainModel == null)
+
+            if (regionDomainModel == null)
             {
-                return NotFound();
+               return NotFound();
             }
-            
+
             return Ok(mapper.Map<RegionDto>(regionDomainModel));
         }
 
