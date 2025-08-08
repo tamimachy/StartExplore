@@ -5,7 +5,7 @@ namespace StartExploreAPI.Data
 {
     public class StartExploreDbContext : DbContext
     {
-        public StartExploreDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
+        public StartExploreDbContext(DbContextOptions<StartExploreDbContext> dbContextOptions) : base(dbContextOptions)
         {
 
         }
