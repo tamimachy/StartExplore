@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using StartExplore.API.Models.Domain;
 using StartExplore.API.Models.DTO;
 
 namespace StartExplore.API.Controllers
@@ -16,7 +17,18 @@ namespace StartExplore.API.Controllers
             ValidateFileUpload(request);
             if (ModelState.IsValid)
             {
+                // Covert DTO to Domain model
+                var imageDomainModel = new Image
+                {
+                    File = request.File,
+                    FileExtension = Path.GetExtension(request.File.FileName),
+                    FileSizeInBytes = request.File.Length,
+                    FileName = request.FileName,
+                    FileDescription = request.FileDescription,
+                };
+
                 // Use repository to upload image
+
 
             }
             return BadRequest(ModelState);
