@@ -1,4 +1,5 @@
 ﻿using StartExplore.API.Models.Domain;
+using StartExploreAPI.Data;
 
 namespace StartExplore.API.Repositories
 {
@@ -6,16 +7,19 @@ namespace StartExplore.API.Repositories
     {
         private readonly IWebHostEnvironment webHostEnvironment;
         private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly StartExploreDbContext dbContext;
 
-        public LocalImageRepository(IWebHostEnvironment webHostEnvironment, IHttpContextAccessor httpContextAccessor)
+        public LocalImageRepository(IWebHostEnvironment webHostEnvironment, 
+            IHttpContextAccessor httpContextAccessor, StartExploreDbContext dbContext)
         {
             this.webHostEnvironment = webHostEnvironment;
             this.httpContextAccessor = httpContextAccessor;
+            this.dbContext = dbContext;
         }
         public async Task<Image> Upload(Image image)
         {
-            var localRFilePath = Path.Combine(webHostEnvironment.ContentRootPath, "Images", 
-                image.FileName, image.FileExtension);
+            var localRFilePath = Path.Combine(webHostEnvironment.ContentRootPath, "Images",
+                $"{image.FileName}{image.FileExtension}");
 
             // Upload Image to Local Path
             using var stream = new FileStream(localRFilePath, FileMode.Create);
@@ -24,9 +28,13 @@ namespace StartExplore.API.Repositories
             // https://localhost:1234/images/image.jpg
             var urlFilePath = $"{httpContextAccessor.HttpContext.Request.Scheme}://{httpContextAccessor.HttpContext.Request.Host}{httpContextAccessor.HttpContext.Request.PathBase}/Images/{image.FileName}{image.FileExtension}";
 
-            
+            image.FilePath = urlFilePath;
 
+            // Add Image to the Images table
+            await dbContext.Images.AddAsync(image);
+            await dbContext.SaveChangesAsync();
 
+            return image;
         }
     }
 }

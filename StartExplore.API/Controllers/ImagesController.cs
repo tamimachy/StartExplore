@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using StartExplore.API.Models.Domain;
 using StartExplore.API.Models.DTO;
+using StartExplore.API.Repositories;
 
 namespace StartExplore.API.Controllers
 {
@@ -9,6 +10,13 @@ namespace StartExplore.API.Controllers
     [ApiController]
     public class ImagesController : ControllerBase
     {
+        private readonly IImageRepository imageRepository;
+
+        public ImagesController(IImageRepository imageRepository)
+        {
+            this.imageRepository = imageRepository;
+        }
+
         // POST: /api/images/Upload
         [HttpPost]
         [Route("Upload")]
@@ -28,7 +36,9 @@ namespace StartExplore.API.Controllers
                 };
 
                 // Use repository to upload image
+                await imageRepository.Upload(imageDomainModel);
 
+                return Ok(imageDomainModel);
 
             }
             return BadRequest(ModelState);
