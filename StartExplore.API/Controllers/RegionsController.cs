@@ -8,6 +8,7 @@ using StartExplore.API.Models.DTO;
 using StartExplore.API.Repositories;
 using StartExploreAPI.Data;
 using StartExploreAPI.Models.Domain;
+using System.Text.Json;
 
 namespace StartExplore.API.Controllers
 {
@@ -19,24 +20,38 @@ namespace StartExplore.API.Controllers
         private readonly StartExploreDbContext dbContext;
         private readonly IRegionRepository regionRepository;
         private readonly IMapper mapper;
+        private readonly ILogger<RegionsController> logger;
 
-        public RegionsController(StartExploreDbContext dbContext, IRegionRepository regionRepository, IMapper mapper)
+        public RegionsController(StartExploreDbContext dbContext, 
+            IRegionRepository regionRepository, IMapper mapper, 
+            ILogger<RegionsController> logger)
         {
             this.dbContext = dbContext;
             this.regionRepository = regionRepository;
             this.mapper = mapper;
+            this.logger = logger;
         }
 
         // GET ALL REGIONS
         // GET: https://localhost:portnumber/api/regions
         [HttpGet]
-        [Authorize(Roles ="Reader")]
+        //[Authorize(Roles ="Reader")]
         public async Task<IActionResult> GetAll()
         {
+            try
+            {
+                throw new Exception("This is a custom exception");
+            }
+            catch (Exception ex)
+            {
+
+            }
             // Get Data From Database - Domain models
             var regionsDomain = await regionRepository.GetAllAsync();
 
             // Return DTOs
+            logger.LogInformation($"Finished GetAllRegions request with data: {JsonSerializer.Serialize(regionsDomain)}");
+
             return Ok(mapper.Map<List<RegionDto>>(regionsDomain));
         }
 
