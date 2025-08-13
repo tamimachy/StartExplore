@@ -46,7 +46,7 @@ namespace StartExplore.API.Controllers
         {
             try
             {
-                throw new Exception("This was the error.")
+                throw new Exception("This was the error.");
                 var walksDomainModel = await walkRepository.GetAllAsync(filterOn, filterQuery,
                 sortBy, isAscending ?? true, pageNumber, pageSize);
 
@@ -55,7 +55,7 @@ namespace StartExplore.API.Controllers
             }
             catch(Exception ex)
             {
-                return Problem("Something went wrong", null, (int)HttpStatusCode.InternalServerError)
+                return Problem("Something went wrong", null, (int)HttpStatusCode.InternalServerError);
             }
         }
 
