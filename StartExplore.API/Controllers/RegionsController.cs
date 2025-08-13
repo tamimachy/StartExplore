@@ -41,18 +41,20 @@ namespace StartExplore.API.Controllers
             try
             {
                 throw new Exception("This is a custom exception");
+                // Get Data From Database - Domain models
+                var regionsDomain = await regionRepository.GetAllAsync();
+
+                // Return DTOs
+                logger.LogInformation($"Finished GetAllRegions request with data: {JsonSerializer.Serialize(regionsDomain)}");
+
+                return Ok(mapper.Map<List<RegionDto>>(regionsDomain));
             }
             catch (Exception ex)
             {
-
+                logger.LogError(ex, ex.Message);
+                throw;
             }
-            // Get Data From Database - Domain models
-            var regionsDomain = await regionRepository.GetAllAsync();
-
-            // Return DTOs
-            logger.LogInformation($"Finished GetAllRegions request with data: {JsonSerializer.Serialize(regionsDomain)}");
-
-            return Ok(mapper.Map<List<RegionDto>>(regionsDomain));
+           
         }
 
         // GET SINGLE REGION (Get Region By ID)

@@ -5,6 +5,7 @@ using StartExplore.API.CustomActionFilters;
 using StartExplore.API.Models.DTO;
 using StartExplore.API.Repositories;
 using StartExploreAPI.Models.Domain;
+using System.Net;
 
 namespace StartExplore.API.Controllers
 {
@@ -43,11 +44,19 @@ namespace StartExplore.API.Controllers
         public async Task<IActionResult> GetAll([FromQuery] string? filterOn, [FromQuery] string? filterQuery, 
             [FromQuery] string? sortBy, [FromQuery] bool? isAscending, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 1000)
         {
-            var walksDomainModel = await walkRepository.GetAllAsync(filterOn,filterQuery, 
+            try
+            {
+                throw new Exception("This was the error.")
+                var walksDomainModel = await walkRepository.GetAllAsync(filterOn, filterQuery,
                 sortBy, isAscending ?? true, pageNumber, pageSize);
 
-            // Map Domain Model to DTO
-            return Ok(mapper.Map<List<WalkDto>>(walksDomainModel));
+                // Map Domain Model to DTO
+                return Ok(mapper.Map<List<WalkDto>>(walksDomainModel));
+            }
+            catch(Exception ex)
+            {
+                return Problem("Something went wrong", null, (int)HttpStatusCode.InternalServerError)
+            }
         }
 
         // Get Walk By Id

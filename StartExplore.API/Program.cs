@@ -16,7 +16,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 var logger = new LoggerConfiguration().WriteTo
-    .Console().MinimumLevel.Information().CreateLogger();
+    .Console().WriteTo.File("Logs/StartExplore_Log.txt", rollingInterval: RollingInterval.Day)
+    .MinimumLevel.Warning().CreateLogger();
 
 builder.Logging.ClearProviders();
 builder.Logging.AddSerilog(logger);
