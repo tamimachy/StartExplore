@@ -44,19 +44,14 @@ namespace StartExplore.API.Controllers
         public async Task<IActionResult> GetAll([FromQuery] string? filterOn, [FromQuery] string? filterQuery, 
             [FromQuery] string? sortBy, [FromQuery] bool? isAscending, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 1000)
         {
-            try
-            {
-                throw new Exception("This was the error.");
-                var walksDomainModel = await walkRepository.GetAllAsync(filterOn, filterQuery,
-                sortBy, isAscending ?? true, pageNumber, pageSize);
+            var walksDomainModel = await walkRepository.GetAllAsync(filterOn, filterQuery,
+            sortBy, isAscending ?? true, pageNumber, pageSize);
 
-                // Map Domain Model to DTO
-                return Ok(mapper.Map<List<WalkDto>>(walksDomainModel));
-            }
-            catch(Exception ex)
-            {
-                return Problem("Something went wrong", null, (int)HttpStatusCode.InternalServerError);
-            }
+            // Create an exception
+            throw new Exception("This is a new exception");
+                
+            // Map Domain Model to DTO
+            return Ok(mapper.Map<List<WalkDto>>(walksDomainModel));
         }
 
         // Get Walk By Id
