@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35806.99 d17.13
+VisualStudioVersion = 17.13.35806.99
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StartExplore.API", "StartExplore.API\StartExplore.API.csproj", "{FD263D19-38D8-4EF8-91DF-9B809080479C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StartExplore.UI", "StartExplore.UI\StartExplore.UI.csproj", "{28BF7677-533D-49D2-BCF8-F7AAB2E3CFA3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{FD263D19-38D8-4EF8-91DF-9B809080479C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD263D19-38D8-4EF8-91DF-9B809080479C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD263D19-38D8-4EF8-91DF-9B809080479C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28BF7677-533D-49D2-BCF8-F7AAB2E3CFA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28BF7677-533D-49D2-BCF8-F7AAB2E3CFA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28BF7677-533D-49D2-BCF8-F7AAB2E3CFA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28BF7677-533D-49D2-BCF8-F7AAB2E3CFA3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
