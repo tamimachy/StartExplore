@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StartExplore.UI.Models;
 using StartExplore.UI.Models.DTO;
+using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -49,14 +50,20 @@ namespace StartExplore.UI.Controllers
         public async Task<IActionResult> Add(AddRegionViewModel model)
         {
             var client = httpClientFactory.CreateClient();
+            var dto = new AddRegionViewModel
+            {
+                Code = model.Code,
+                Name = model.Name,
+                RegionImageUrl = model.RegionImageUrl
+            };
             var httpRequestMessage = new HttpRequestMessage()
             {
                 Method = HttpMethod.Post,
                 RequestUri = new Uri("https://localhost:7223/api/regions"),
-                Content = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json")
+                Content = new StringContent(JsonSerializer.Serialize(dto), Encoding.UTF8, "application/json")
             };
             var httpResponseMessage = await client.SendAsync(httpRequestMessage);
-            httpResponseMessage.EnsureSuccessStatusCode();  
+            httpResponseMessage.EnsureSuccessStatusCode();
 
             var response = await httpResponseMessage.Content.ReadFromJsonAsync<RegionDto>();
             if(response is not null)
