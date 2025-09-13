@@ -11,6 +11,7 @@
             <td>Id</td>
             <td>Code</td>
             <td>Name</td>
+            <td></td>
         </tr>
     </thead>
     <tbody>
@@ -20,6 +21,10 @@
                 <td>@region.Id</td>
                 <td>@region.Code</td>
                 <td>@region.Name</td>
+                <td>
+                    <a class="btn btn-light" asp-controller="Regions" asp-action="Edit" asp-route-id="@region.Id">Edit</a>
+                    @* <a class="btn btn-danger" asp-controller="Regions" asp-action="Delete" asp-route-id="@region.Id">Delete</a> *@
+                </td>
             </tr>
         }
     </tbody>
